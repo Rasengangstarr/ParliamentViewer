@@ -1,10 +1,9 @@
-import MemberCard from "./components/MemberCard";
+import MemberList from "./components/MemberList";
 
 function App() {
   return (
     <div>
-      <h1>Members of Parliament</h1>
-      <MemberCard />
+      <MemberList /> 
     </div>
   );
 }

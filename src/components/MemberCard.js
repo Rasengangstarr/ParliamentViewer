@@ -1,9 +1,9 @@
-function MemberCard() {
+function MemberCard(props) {
   return (
     <div className="card">
-      <h2>TITLE</h2>
+      <h2>{props.name}</h2>
       <div className="card-actions">
-        <button className="button">Delete</button>
+        <button className="button">Details</button>
       </div>
     </div>
   );
