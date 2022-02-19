@@ -9,7 +9,7 @@ export default function MemberList(props) {
   const [SelectedMember, setSelectedMember] = useState({});
 
   function handleDetailsClick(evt) {
-    setSelectedMember(Members[evt.target.value]);
+    setSelectedMember(FilteredMembers[evt.target.value]);
     setShowModal(true);
   }
 
@@ -18,13 +18,16 @@ export default function MemberList(props) {
   }
 
   function filterMembers(evt) {
-    applyFilterToMembers(Members.filter(e => e.value.nameDisplayAs.toLowerCase().includes(evt.target.value.toLowerCase())))
+    if (evt.target.value != "")
+      applyFilterToMembers(Members.filter(e => e.value.nameDisplayAs.toLowerCase().includes(evt.target.value.toLowerCase())));
+    else
+      applyFilterToMembers(Members);
   }
 
   var getMemberBatch = function (batchNumber) {
     return new Promise(function (resolve, reject) {
       fetch(
-        "https://members-api.parliament.uk/api/Members/Search?House=1&skip=" +
+        "https://members-api.parliament.uk/api/Members/Search?IsCurrentMember=true&House=1&skip=" +
           batchNumber * 20 +
           "&take=20"
       )
@@ -46,8 +49,9 @@ export default function MemberList(props) {
     let currentBatch = 0;
     let allMembers = [];
     let promises = [];
-    while (currentBatch < numBatches) {
+    while (currentBatch <= numBatches) {
       promises.push(getMemberBatch(currentBatch))
+      console.log(currentBatch*20);
       currentBatch += 1;
     }
     Promise.all(promises).then(function(values)
@@ -56,6 +60,7 @@ export default function MemberList(props) {
         allMembers = allMembers.concat(v.items);
       });
       fetchMembers(allMembers);
+      applyFilterToMembers(allMembers);
     });
     
   }
