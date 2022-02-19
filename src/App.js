@@ -1,9 +1,10 @@
 import MemberList from "./components/MemberList";
 
 function App() {
+
   return (
     <div>
-      <MemberList /> 
+      <MemberList />
     </div>
   );
 }

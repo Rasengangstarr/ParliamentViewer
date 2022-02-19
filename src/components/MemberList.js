@@ -1,13 +1,30 @@
 import React, { useState, useEffect } from "react";
 import MemberCard from "./MemberCard";
+import MemberModal from "./MemberModal";
 
-export default function MemberList() {
+export default function MemberList(props) {
   const [Members, fetchMembers] = useState([]);
+  const [FilteredMembers, applyFilterToMembers] = useState([]);
+  const [ShowModal, setShowModal] = useState(false);
+  const [SelectedMember, setSelectedMember] = useState({});
+
+  function handleDetailsClick(evt) {
+    setSelectedMember(Members[evt.target.value]);
+    setShowModal(true);
+  }
+
+  function closeDetailsModal(evt) {
+    setShowModal(false);
+  }
+
+  function filterMembers(evt) {
+    applyFilterToMembers(Members.filter(e => e.value.nameDisplayAs.toLowerCase().includes(evt.target.value.toLowerCase())))
+  }
 
   var getMemberBatch = function (batchNumber) {
     return new Promise(function (resolve, reject) {
       fetch(
-        "https://members-api.parliament.uk/api/Members/Search?skip" +
+        "https://members-api.parliament.uk/api/Members/Search?House=1&skip=" +
           batchNumber * 20 +
           "&take=20"
       )
@@ -37,8 +54,6 @@ export default function MemberList() {
     {
       values.forEach(v => {
         allMembers = allMembers.concat(v.items);
-        console.log(allMembers);
-        console.log(v.items);
       });
       fetchMembers(allMembers);
     });
@@ -51,10 +66,16 @@ export default function MemberList() {
 
   return (
     <>
-      <h2>Members of Parliament</h2>
-        {Members.map((item, id) => {
-          return <MemberCard name={item.value.nameDisplayAs} />;
+      <h2 className="page-title">Members of Parliament</h2>
+      <div className="search-box-container">
+        <div className="search-box-background">
+          <input onChange={filterMembers} className="search-box" type="text"></input>
+        </div>
+      </div>
+        {FilteredMembers.map((item, id) => {
+          return <MemberCard onMemberCardDetailsClick={handleDetailsClick} key={id} listId={id} member={item.value} />;
         })}
+      <MemberModal member={SelectedMember} showModal={ShowModal} onDetailsCloseClick={closeDetailsModal} />
     </>
   );
 }
