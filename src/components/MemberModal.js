@@ -24,8 +24,7 @@ function MemberModal(props) {
           </div>
         </div>
         <button className="close-button" onClick={props.onDetailsCloseClick}>
-          {" "}
-          x{" "}
+          x
         </button>
       </div>
     </div>
