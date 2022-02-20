@@ -26,6 +26,14 @@ body {
   box-shadow: 5px 5px 2px #1D2330;
 }
 
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  [class="card"] {
+    width: 60%;
+    margin-left:1em;
+  }
+}
+
 .card-actions
 {
   float:inline-end;
@@ -45,7 +53,7 @@ body {
 }
 
 .button {
-  font-size: 1em;
+  font-size: 1`em;
   padding: .5em;
   background-color: #4c566a;
   color: #D8DEE9;
@@ -70,6 +78,8 @@ body {
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+
+
 /* Modal Content */
 .info-modal-content {
   background-color: #D8DEE9;
@@ -83,9 +93,18 @@ body {
   position:relative;
 }
 
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  [class="info-modal-content"] {
+    width: 15em;
+  }
+}
+
 .member-portrait {
   width: 10em;
 }
+
+
 
 .search-box-container {
   padding-bottom: 2em;
@@ -108,6 +127,30 @@ body {
   background-origin:content-box;
   width:350px;
 }
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  [class="search-box-container"] 
+  {
+    width: 10em;
+    padding-left: 1em;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  [class="search-box-background"] {
+    width: 14em;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  [class="search-box"] {
+    width: 9em;
+  }
+}
+
 .row {
   display: flex;
   flex-direction: row;
